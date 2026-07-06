@@ -1,0 +1,21 @@
+{
+  "settings_version": "0.0.6",
+  "datasets_dir": "D:\\\u684c\u9762\\maize\\datasets",
+  "weights_dir": "weights",
+  "runs_dir": "runs",
+  "uuid": "cc1f5d4695f069dfaa27c9c2cc1c86f92dc667b041e5f6c27c06130762b0845f",
+  "sync": false,
+  "api_key": "",
+  "openai_api_key": "",
+  "clearml": true,
+  "comet": true,
+  "dvc": true,
+  "hub": true,
+  "mlflow": true,
+  "neptune": true,
+  "raytune": true,
+  "tensorboard": false,
+  "wandb": false,
+  "vscode_msg": true,
+  "openvino_msg": true
+}

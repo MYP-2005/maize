@@ -1,0 +1,34 @@
+2026-07-06 16:41:13,817 [INFO] root: Start image feature extraction: {'name': 'Dan599B', 'L': 'D:/桌面/maize/训练数据集和模型/测试照片\\Dan599B_L.jpg', 'R': 'D:/桌面/maize/训练数据集和模型/测试照片\\Dan599B_R.jpg'}
+2026-07-06 16:41:17,319 [INFO] yolo_sam_features: Extract features start: sample=Dan599B, input={'name': 'Dan599B', 'L': 'D:/桌面/maize/训练数据集和模型/测试照片\\Dan599B_L.jpg', 'R': 'D:/桌面/maize/训练数据集和模型/测试照片\\Dan599B_R.jpg'}
+2026-07-06 16:41:17,319 [ERROR] root: Image feature extraction failed
+Traceback (most recent call last):
+  File "d:\桌面\maize\_build_main.py", line 70, in process
+    result = extract_features(image_input, sample_name=sample_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\桌面\maize\yolo_sam_features.py", line 558, in extract_features
+    pipeline = get_pipeline()
+               ^^^^^^^^^^^^^^
+  File "d:\桌面\maize\yolo_sam_features.py", line 442, in get_pipeline
+    _PIPELINE = AutoLabelPipeline()
+                ^^^^^^^^^^^^^^^^^^^
+  File "d:\桌面\maize\yolo_sam_features.py", line 367, in __init__
+    raise FileNotFoundError(f"Model file not found: {path}")
+FileNotFoundError: Model file not found: D:\桌面\maize\sam2.1_hiera_tiny.encoder.onnx
+2026-07-06 16:41:17,330 [INFO] root: Finish image feature extraction
+2026-07-06 16:49:24,579 [INFO] root: Start image feature extraction: {'name': 'CR14B', 'L': 'D:/桌面/maize/训练数据集和模型/测试照片\\CR14B_L.jpg', 'R': 'D:/桌面/maize/训练数据集和模型/测试照片\\CR14B_R.jpg'}
+2026-07-06 16:49:27,986 [INFO] yolo_sam_features: Extract features start: sample=CR14B, input={'name': 'CR14B', 'L': 'D:/桌面/maize/训练数据集和模型/测试照片\\CR14B_L.jpg', 'R': 'D:/桌面/maize/训练数据集和模型/测试照片\\CR14B_R.jpg'}
+2026-07-06 16:49:27,987 [ERROR] root: Image feature extraction failed
+Traceback (most recent call last):
+  File "d:\桌面\maize\_build_main.py", line 70, in process
+    result = extract_features(image_input, sample_name=sample_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\桌面\maize\yolo_sam_features.py", line 558, in extract_features
+    pipeline = get_pipeline()
+               ^^^^^^^^^^^^^^
+  File "d:\桌面\maize\yolo_sam_features.py", line 442, in get_pipeline
+    _PIPELINE = AutoLabelPipeline()
+                ^^^^^^^^^^^^^^^^^^^
+  File "d:\桌面\maize\yolo_sam_features.py", line 367, in __init__
+    raise FileNotFoundError(f"Model file not found: {path}")
+FileNotFoundError: Model file not found: D:\桌面\maize\sam2.1_hiera_tiny.encoder.onnx
+2026-07-06 16:49:27,988 [INFO] root: Finish image feature extraction

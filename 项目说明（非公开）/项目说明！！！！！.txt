@@ -1,0 +1,53 @@
+图像处理线程说明
+
+这个程序里的“图像处理线程”不是在主界面里直接跑模型，而是使用 QThread + QObject worker 的方式，把耗时的图像特征提取放到后台线程里执行，避免界面卡顿。
+
+对应源码位置：
+- 主线程/界面入口：D:\桌面\模型建设3\项目\项目\_build_main.py
+- 图像处理 worker：D:\桌面\模型建设3\项目\项目\_build_main.py 第55行左右到第74行左右
+- 线程初始化：D:\桌面\模型建设3\项目\项目\_build_main.py 第374行左右到第393行左右
+- 按钮绑定：D:\桌面\模型建设3\项目\项目\_build_main.py 第398行左右到第409行左右
+- 点击“提取图像特征”触发：D:\桌面\模型建设3\项目\项目\_build_main.py 第692行左右到第705行左右
+- 真正的模型与特征提取：D:\桌面\模型建设3\项目\项目\yolo_sam_features.py
+- 备用命令行入口：D:\桌面\模型建设3\项目\项目\yolo_sam_subprocess.py
+
+运行流程：
+1. 用户在界面中点击“提取图像特征”按钮。
+2. 主界面先组装 image_input，里面包含样本名、左图、右图路径等信息。
+3. 主线程发出 start_image_process 信号。
+4. 这个信号连接到 ImageProcessWorker.process()，该函数运行在独立的 QThread 中。
+5. process() 内部调用 yolo_sam_features.extract_features()。
+6. 处理完成后，通过 finished 信号把结果回传给主界面。
+7. 主界面收到结果后，把 H、S、V、DOCI、area、length、width 等特征回填到输入框，供后续预测使用。
+
+这个线程实际调用的模型：
+- best.pt：YOLO 检测模型，用来先找出图中的目标籽粒。
+- sam2.1_hiera_tiny.encoder.onnx
+- sam2.1_hiera_tiny.decoder.onnx：SAM2 的 ONNX 编码器和解码器，用来对 YOLO 检出的框进一步做分割，得到更精确的掩膜。
+- 之后再由特征计算模块统计面积、长度、宽度、颜色特征和 DOCI。
+
+对应源码位置：
+- YOLO 模型加载：D:\桌面\模型建设3\项目\项目\yolo_sam_features.py 第43行左右到第45行左右
+- SAM2 推理类：D:\桌面\模型建设3\项目\项目\yolo_sam_features.py 第115行左右到第197行左右
+- YOLO + SAM2 主流程：D:\桌面\模型建设3\项目\项目\yolo_sam_features.py 第348行左右到第428行左右
+- 单图特征提取入口：D:\桌面\模型建设3\项目\项目\yolo_sam_features.py 第385行左右到第417行左右
+- 总入口 `extract_features()`：D:\桌面\模型建设3\项目\项目\yolo_sam_features.py 第543行左右到第568行左右
+
+“除杂”逻辑在哪里：
+- 这部分不是单独绑定在按钮上，而是包含在 yolo_sam_features.py 的特征提取流程里。
+- extract_features() 在拿到所有目标特征后，会调用 filter_seed_dataframe() 做筛选，这一步就是“除杂/过滤”逻辑。
+- 过滤规则大致包括：
+  - length >= 40
+  - width >= 40
+  - H/S/V 的偏度、峰度阈值筛选
+  - 再按置信度保留前 target_objects 个目标
+
+对应源码位置：
+- 筛选函数：D:\桌面\模型建设3\项目\项目\yolo_sam_features.py 第450行左右到第477行左右
+- 聚合输出：D:\桌面\模型建设3\项目\项目\yolo_sam_features.py 第480行左右到第520行左右
+- `extract_features()` 里调用筛选：D:\桌面\模型建设3\项目\项目\yolo_sam_features.py 第543行左右到第565行左右
+
+一句话总结：
+- 线程负责异步跑图像特征提取
+- 模型用的是 YOLO + SAM2
+- “除杂”逻辑在 extract_features() 里面，不是单独按钮绑定的
