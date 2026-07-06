@@ -358,14 +358,14 @@ class MyWindow(QWidget, Ui_Form):
         self.nProgress.setObjectName("nProgress")
         self.nProgress.setRange(0, 100)
         self.nProgress.setValue(0)
-        self.nProgress.setFormat("N 预测状态：等待预测")
+        self.nProgress.setFormat("N含量 预测状态：等待预测")
         self.gridLayout_Prediction.addWidget(self.nProgress, 2, 0, 1, 2)
 
         self.nueProgress = QProgressBar(self.groupBox_Prediction)
         self.nueProgress.setObjectName("nueProgress")
         self.nueProgress.setRange(0, 100)
         self.nueProgress.setValue(0)
-        self.nueProgress.setFormat("NUE 预测状态：等待预测")
+        self.nueProgress.setFormat("NUEg 预测状态：等待预测")
         self.gridLayout_Prediction.addWidget(self.nueProgress, 3, 0, 1, 2)
 
         self.groupBox_Prediction.setSizePolicy(
@@ -439,9 +439,9 @@ class MyWindow(QWidget, Ui_Form):
         self.current_n_level = ""
         self.current_nue_level = ""
         self.nProgress.setValue(0)
-        self.nProgress.setFormat("N 预测状态：等待预测")
+        self.nProgress.setFormat("N含量 预测状态：等待预测")
         self.nueProgress.setValue(0)
-        self.nueProgress.setFormat("NUE 预测状态：等待预测")
+        self.nueProgress.setFormat("NUEg 预测状态：等待预测")
         self.update_action_state()
 
     def clear_image_features(self):
@@ -860,23 +860,23 @@ class MyWindow(QWidget, Ui_Form):
         self.current_n_level = self.get_n_level(n_float)
         self.current_nue_level = self.get_nue_level(nue_float)
 
-        # 读条按指定满格值线性映射：N=3，NUE=50
+        # 读条按指定满格值线性映射：N=3，NUEg=50
         n_overflow = n_float > 3.0
         nue_overflow = nue_float > 50.0
         n_percent = max(0, min(100, int((n_float / 3.0) * 100)))
         nue_percent = max(0, min(100, int((nue_float / 50.0) * 100)))
 
         self.nProgress.setValue(n_percent)
-        self.nProgress.setFormat(f"N 预测值：{n_float:.4f}%({self.current_n_level})")
+        self.nProgress.setFormat(f"N含量 预测值：{n_float:.4f}%({self.current_n_level})")
         self.nueProgress.setValue(nue_percent)
-        self.nueProgress.setFormat(f"NUE 预测值：{nue_float:.4f}({self.current_nue_level})")
+        self.nueProgress.setFormat(f"NUEg 预测值：{nue_float:.4f}({self.current_nue_level})")
 
         if n_overflow or nue_overflow:
             parts = []
             if n_overflow:
-                parts.append(f"N 超出读条上限 3.0,当前值 {n_float:.4f}")
+                parts.append(f"N含量 超出读条上限 3.0,当前值 {n_float:.4f}")
             if nue_overflow:
-                parts.append(f"NUE 超出读条上限 50.0,当前值 {nue_float:.4f}")
+                parts.append(f"NUEg 超出读条上限 50.0,当前值 {nue_float:.4f}")
             warning_text = ":".join(parts)
             logging.warning(warning_text)
             self.set_status(warning_text)

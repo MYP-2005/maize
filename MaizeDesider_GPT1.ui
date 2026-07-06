@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>玉米籽粒颜色提取与氮浓度预测系统</string>
+   <string>玉米籽粒颜色提取与氮含量预测系统</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget { font-family: &quot;Microsoft YaHei&quot;; font-size: 10pt; }
@@ -253,7 +253,7 @@ QLabel#colorLabel { background-color: white; border: 1px solid black; }</string>
         <item row="0" column="0">
          <widget class="QLabel" name="label_N">
           <property name="text">
-           <string>籽粒氮浓度 N%</string>
+           <string>籽粒氮含量 N%</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -266,7 +266,7 @@ QLabel#colorLabel { background-color: white; border: 1px solid black; }</string>
         <item row="1" column="0">
          <widget class="QLabel" name="label_Nue">
           <property name="text">
-           <string>氮利用效率 NUE</string>
+           <string>氮效率 NUEg</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -323,7 +323,7 @@ QLabel#colorLabel { background-color: white; border: 1px solid black; }</string>
            <bool>true</bool>
           </property>
           <property name="placeholderText">
-           <string>输入关键词或下拉选择图片</string>
+           <string>可输入编号</string>
           </property>
          </widget>
         </item>
@@ -394,7 +394,7 @@ QLabel#colorLabel { background-color: white; border: 1px solid black; }</string>
         <item row="0" column="1">
          <widget class="QPushButton" name="predictBtn">
           <property name="text">
-           <string>预测氮浓度</string>
+           <string>预测氮含量</string>
           </property>
          </widget>
         </item>
