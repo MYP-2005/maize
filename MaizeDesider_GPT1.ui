@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>694</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>玉米籽粒颜色提取与氮浓度预测系统</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget { font-family: &quot;Microsoft YaHei&quot;; font-size: 10pt; }
+QGroupBox { font-weight: bold; border: 1px solid #B8B8B8; border-radius: 6px; margin-top: 10px; padding: 8px; }
+QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 4px; }
+QLineEdit, QComboBox { min-height: 26px; }
+QPushButton { min-height: 30px; padding: 4px 12px; }
+QLabel#imageLabelLeft, QLabel#imageLabelRight { background-color: #FAFAFA; border: 1px solid #B8B8B8; }
+QLabel#colorLabel { background-color: white; border: 1px solid black; }</string>
+  </property>
+  <layout class="QHBoxLayout" name="mainHorizontalLayout">
+   <property name="spacing">
+    <number>14</number>
+   </property>
+   <property name="leftMargin">
+    <number>16</number>
+   </property>
+   <property name="topMargin">
+    <number>16</number>
+   </property>
+   <property name="rightMargin">
+    <number>16</number>
+   </property>
+   <property name="bottomMargin">
+    <number>16</number>
+   </property>
+   <item>
+    <layout class="QVBoxLayout" name="leftPanelLayout">
+     <item>
+      <widget class="QGroupBox" name="groupBox_ColorFeature">
+       <property name="title">
+        <string>颜色特征</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_ColorFeature">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_H">
+          <property name="text">
+           <string>色度 H</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="lineEdit_H"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_S">
+          <property name="text">
+           <string>饱和度 S</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="lineEdit_S"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_V">
+          <property name="text">
+           <string>明度 V</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="lineEdit_V"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_DOCI">
+          <property name="text">
+           <string>DOCI</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="lineEdit_DOCI"/>
+        </item>
+        <item row="0" column="2" rowspan="4">
+         <widget class="QLabel" name="colorLabel">
+          <property name="minimumSize">
+           <size>
+            <width>96</width>
+            <height>96</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>颜色</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_ShapeFeature">
+       <property name="title">
+        <string>籽粒形态特征</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_ShapeFeature">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_Length">
+          <property name="text">
+           <string>长度 mm</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="lineEdit_Length"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_Width">
+          <property name="text">
+           <string>宽度 mm</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="lineEdit_Width"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_Area">
+          <property name="text">
+           <string>面积 mm²</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="lineEdit_Area"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_ManualFeature">
+       <property name="title">
+        <string>产量与考种数据</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_ManualFeature">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_Yield">
+          <property name="text">
+           <string>单株产量 g/株</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" colspan="2">
+         <widget class="QLineEdit" name="lineEdit_Yield">
+          <property name="placeholderText">
+           <string>烘干后单株籽粒产量</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_Hweight">
+          <property name="text">
+           <string>百粒重 g</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" colspan="2">
+         <widget class="QLineEdit" name="lineEdit_Hweight"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_Vol">
+          <property name="text">
+           <string>百粒体积 ml</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="lineEdit_Vol"/>
+        </item>
+        <item row="2" column="2">
+         <widget class="QCheckBox" name="checkBox_Vol">
+          <property name="text">
+           <string>体积换算</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_Tweight">
+          <property name="text">
+           <string>容重 g/ml</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="lineEdit_Tweight"/>
+        </item>
+        <item row="3" column="2">
+         <widget class="QCheckBox" name="checkBox_Tweight">
+          <property name="text">
+           <string>容重换算</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_Prediction">
+       <property name="title">
+        <string>模型预测结果</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_Prediction">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_N">
+          <property name="text">
+           <string>籽粒氮浓度 N%</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="lineEdit_N"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_Nue">
+          <property name="text">
+           <string>氮利用效率 NUE</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="lineEdit_Nue"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="rightPanelLayout">
+     <item>
+      <widget class="QGroupBox" name="groupBox_ImageImport">
+       <property name="title">
+        <string>图片导入与搜索</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_ImageImport">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_ImageFolder">
+          <property name="text">
+           <string>图片文件夹</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="folderPathLineEdit">
+          <property name="placeholderText">
+           <string>请选择图片所在文件夹</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QPushButton" name="selectFolderBtn">
+          <property name="text">
+           <string>选择文件夹</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_ImageSearch">
+          <property name="text">
+           <string>搜索/选择图片</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="imageComboBox">
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+          <property name="placeholderText">
+           <string>输入关键词或下拉选择图片</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="loadImageBtn">
+          <property name="text">
+           <string>导入图片</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_ImageDisplay">
+       <property name="title">
+        <string>图片显示区</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_ImageDisplay">
+        <item row="0" column="0">
+         <widget class="QLabel" name="imageLabelLeft">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>360</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>左目相机</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="imageLabelRight">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>360</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>右目相机</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_Action">
+       <property name="title">
+        <string>程序操作</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_Action">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="extractColorBtn">
+          <property name="text">
+           <string>提取颜色特征</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QPushButton" name="predictBtn">
+          <property name="text">
+           <string>预测氮浓度</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QPushButton" name="exportExcelBtn">
+          <property name="text">
+           <string>导出 Excel</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="3">
+         <widget class="QLabel" name="statusLabel">
+          <property name="text">
+           <string>状态：等待导入图片</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
