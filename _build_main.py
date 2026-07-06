@@ -351,6 +351,9 @@ class MyWindow(QWidget, Ui_Form):
         self.lineEdit_Nue.setPlaceholderText("等待预测")
         self.folderPathLineEdit.setReadOnly(True)
         self.imageComboBox.setInsertPolicy(self.imageComboBox.InsertPolicy.NoInsert)
+        combo_line_edit = self.imageComboBox.lineEdit()
+        if combo_line_edit is not None:
+            combo_line_edit.setPlaceholderText("可输入编号")
 
 ########################氮分等级读条############
     def setup_prediction_chart(self):
@@ -626,6 +629,7 @@ class MyWindow(QWidget, Ui_Form):
             self.imageComboBox.blockSignals(True)
             self.imageComboBox.clear()
             self.imageComboBox.addItems(matches)
+            self.imageComboBox.setCurrentIndex(-1)
             self.imageComboBox.setEditText(text)
             self.imageComboBox.blockSignals(False)
         finally:
@@ -639,6 +643,8 @@ class MyWindow(QWidget, Ui_Form):
     def load_selected_image(self):
         text = self.imageComboBox.currentText().strip()
         if not text:
+            if self.imageComboBox.count() > 0:
+                self.imageComboBox.showPopup()
             return
 
         chosen_name = None
@@ -655,12 +661,8 @@ class MyWindow(QWidget, Ui_Form):
                 if len(fuzzy_matches) == 1:
                     chosen_name = fuzzy_matches[0]
                 elif len(fuzzy_matches) > 1:
-                    QMessageBox.information(
-                        self,
-                        "提示",
-                        "匹配到多个文件，请从下拉列表中选择完整文件名：\n" +
-                        "\n".join(fuzzy_matches[:10])
-                    )
+                    self.set_status("匹配到多个文件，请从下拉列表中选择完整文件名")
+                    self.imageComboBox.showPopup()
                     return
                 else:
                     return
